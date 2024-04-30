@@ -20,7 +20,7 @@ switches:
     states: [ 半角, 全角 ]
   - name: zh_hans
     reset: 1
-    states: [ 汉字, 漢字 ]
+    states: [ 漢字, 汉字 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
 
