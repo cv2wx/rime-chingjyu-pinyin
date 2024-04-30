@@ -28,5 +28,5 @@ translator:
   prism: chingjyu_pinyin_tw
 
 simplifier:
-  opencc_config: t2twp.json
+  opencc_config: s2twp.json
   option_name: zh_tw
