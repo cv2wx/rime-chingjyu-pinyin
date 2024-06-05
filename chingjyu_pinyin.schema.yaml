@@ -8,7 +8,7 @@ schema:
   author:
     - 清羽 <i@chingjyu.cyou>
   description: |
-    清羽拼音：繁体输入
+    清羽拼音
 
 switches:
   - name: ascii_mode
