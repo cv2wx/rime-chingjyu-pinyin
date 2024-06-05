@@ -64,7 +64,7 @@ translator:
 
 traditionalizer:
   opencc_config: s2t.json
-  option_name: zh_hant
+  option_name: traditionalizer
 
 custom_phrase:
   dictionary: ""
