@@ -1,0 +1,36 @@
+# Rime schema
+# encoding: utf-8
+
+__include: chingjyu_pinyin.schema:/
+
+schema:
+  schema_id: chingjyu_pinyin_hk
+  name: 清羽拼音·香港繁体
+  version: "0.2"
+  author:
+    - 清羽 <i@chingjyu.cyou>
+  description: |
+    清羽拼音：輸出香港繁体
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: zh_hk
+    reset: 1
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+
+translator:
+  prism: chingjyu_pinyin_hk
+
+traditionalizer:
+  opencc_config: s2hk.json
+  option_name: zh_hk
+
+key_binder:
+  bindings/+:
+    - { when: always, accept: Control+Shift+4, toggle: zh_hans }
+    - { when: always, accept: Control+Shift+dollar, toggle: zh_hans }
