@@ -43,7 +43,7 @@ engine:
     - table_translator@custom_phrase
     - script_translator
   filters:
-    - traditionalizer
+    - simplifier@traditionalizer
     - uniquifier
 
 speller:
