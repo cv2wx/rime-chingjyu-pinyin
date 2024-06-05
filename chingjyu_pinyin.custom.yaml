@@ -1,0 +1,204 @@
+# Rime configuration - pinyin
+
+# 參考資料：
+# 【朙月拼音】模糊音定製模板
+# https://gist.github.com/lotem/2320943
+
+# 用法
+usage: |
+   chingjyu_pinyin.custom.yaml
+  patch:
+    speller/algebra:
+      __patch:
+        - pinyin:/zh_z_bufen
+        - pinyin:/n_l_bufen
+        - pinyin:/r_l_bufen
+        - pinyin:/r_y_bufen
+        - pinyin:/hu_f_buhun
+        - pinyin:/eng_ong_bufen
+        - pinyin:/en_eng_bufen
+        - pinyin:/ziantuan
+        - pinyin:/zhongguan
+        - pinyin:/abbreviation
+        - pinyin:/spelling_correction
+        - pinyin:/key_correction
+    translator/preedit_format/+:
+      __patch:
+        - pinyin:/ziantuan_preedit_format
+        - pinyin:/zhongguan_preedit_format
+
+# 模糊音定義
+
+zh_z_bufen:
+  __append:
+    - derive/^([zcs])h/$1/             # zh, ch, sh => z, c, s
+    - derive/^([zcs])([^h])/$1h$2/     # z, c, s => zh, ch, sh
+
+n_l_bufen:
+  __append:
+    - derive/^n/l/                     # n => l
+    - derive/^l/n/                     # l => n
+
+r_l_bufen:
+  __append:
+    - derive/^r/l/                     # r => l
+
+r_y_bufen:
+  __append:
+    - derive/^ren/yin/                 # ren => yin, reng => ying
+    - derive/^r/y/                     # r => y
+
+hu_f_buhun:
+  __append:
+    - derive/^hu$/fu/                  # hu => fu
+    - derive/^hong$/feng/              # hong => feng
+    - derive/^hu([in])$/fe$1/          # hui => fei, hun => fen
+    - derive/^hu([ao])/f$1/            # hua => fa, ...
+
+    - derive/^fu$/hu/                  # fu => hu
+    - derive/^feng$/hong/              # feng => hong
+    - derive/^fe([in])$/hu$1/          # fei => hui, fen => hun
+    - derive/^f([ao])/hu$1/            # fa => hua, ...
+
+# 韻母部份
+
+eng_ong_bufen:
+  __append:
+    - derive/^([bpmf])eng$/$1ong/      # meng = mong, ...
+
+en_eng_bufen:
+  __append:
+    - derive/([ei])n$/$1ng/            # en => eng, in => ing
+    - derive/([ei])ng$/$1n/            # eng => en, ing => in
+
+# 「反模糊音」？
+# 誰說方言沒有普通話精確；有模糊音，就能有反模糊音。
+# 示例爲分尖團的中原官話。
+# 注意：這個辦法雖從拼寫上做出了區分，然而受拼音詞典制約，候選字仍是混的。
+
+# 強行分尖團
+ziantuan:
+  __append:
+    - derive/^ji$/zii/   # 在《漢語拼音方案》設計者的安排下鳩佔鵲巢，尖音i只好雙寫了
+    - derive/^qi$/cii/
+    - derive/^xi$/sii/
+    - derive/^ji([aoeun])/zi$1/  # jian => zian, ...
+    - derive/^qi([aoeun])/ci$1/
+    - derive/^xi([aoeun])/si$1/
+    - derive/^ju/zv/
+    - derive/^qu/cv/
+    - derive/^xu/sv/
+    - derive/^([zcs])ii/$1yi/  # zii 也可拼作 zyi
+    - derive/^([nlzcs])v/$1yu/  # zv 也可拼作 zyu
+
+# 分尖團後拼式的改寫條件也要相應地擴充
+ziantuan_preedit_format:
+  __append:
+    - xform/([zcs])ii/$1ï/
+    - xform/([zcs])v/$1ü/
+
+# 改寫字母 ê
+zhongguan_preedit_format:
+  __append:
+    - "xform/e[eh]($|[ '])/ê$1/"
+    - "xform/ue($|[ '])/uê$1/"
+
+# 注意：模糊音定義先於簡拼定義，方可令簡拼支持以上模糊音
+abbreviation:
+  __append:
+    - abbrev/^([a-z]).+$/$1/           # 簡拼（首字母）
+    - abbrev/^([zcs]h).+$/$1/          # 簡拼（zh, ch, sh）
+
+# 以下是一組容錯拼寫，《漢語拼音》方案以前者爲正
+spelling_correction:
+  __append:
+    - derive/^([nl])ve$/$1ue/          # nve = nue, lve = lue
+    - derive/^([jqxy])u/$1v/           # ju = jv,
+    - derive/un$/uen/                  # gun = guen,
+    - derive/ui$/uei/                  # gui = guei,
+    - derive/iu$/iou/                  # jiu = jiou,
+
+# 自動糾正一些常見的按鍵錯誤
+key_correction:
+  __append:
+    - derive/([aeiou])ng$/$1gn/        # dagn => dang
+    - derive/([dtngkhrzcs])o(u|ng)$/$1o/  # zho => zhong|zhou
+    - derive/ong$/on/                  # zhonguo => zhong guo
+    - derive/ao$/oa/                   # hoa => hao
+    - derive/([iu])a(o|ng?)$/a$1$2/    # tain => tian
+########## START 这几个有副作用的规则圈起来，方便取舍
+    # 这些规则对全拼简拼混输有副作用：如「x'ai 喜爱」被纠错为「xia 下」
+    # zh、ch、sh
+    # - derive/([zcs])h(a|e|i|u|ai|ei|an|en|ou|uo|ua|un|ui|uan|uai|uang|ang|eng|ong)$/h$1$2/  # hzi → zhi
+    # - derive/([zcs])h([aeiu])$/$1$2h/  # zih → zhi
+    # # ia
+    # - derive/([qjx])ia$/$1ai/  # qai → qia
+    # # an
+    # - derive/([wrtypsdfghklzcbnm])an$/$1na/  # dna → dan
+    # # en
+    # - derive/([wrpsdfghklzcbnm])en$/$1ne/  # rne → ren
+    # # in
+    # - derive/([qypjlxbnm])in$/$1ni/  # qni → qin
+    # # un
+    # - derive/([qrtysdghjklzxc])un$/$1nu/  # qnu → qun
+    # # ian
+    # - derive/([qtpdjlxbnm])ian$/$1ain/
+########## END
+    # ai
+    - derive/^([wghk])ai$/$1ia/  # wia → wai
+    # ei
+    - derive/([wfghkz])ei$/$1ie/  # wie → wei
+    # ie
+    - derive/([jqx])ie$/$1ei/  # jei → jie
+    # ao
+    - derive/([rtypsdghklzcbnm])ao$/$1oa/
+    # ou
+    - derive/([ypfm])ou$/$1uo/
+    # uo（无）
+    # ang
+    - derive/([wrtypsdfghklzcbnm])ang$/$1nag/
+    - derive/([wrtypsdfghklzcbnm])ang$/$1agn/
+    # eng
+    - derive/([wrtpsdfghklzcbnm])eng$/$1neg/
+    - derive/([wrtpsdfghklzcbnm])eng$/$1egn/
+    # ing
+    - derive/([qtypdjlxbnm])ing$/$1nig/
+    - derive/([qtypdjlxbnm])ing$/$1ign/
+    # ong
+    - derive/([rtysdghklzcn])ong$/$1nog/
+    - derive/([rtysdghklzcn])ong$/$1ogn/
+    # iao
+    - derive/([qtpdjlxbnm])iao$/$1ioa/
+    - derive/([qtpdjlxbnm])iao$/$1oia/
+    # ui
+    - derive/([rtsghkzc])ui$/$1iu/
+    # iu
+    - derive/([qjlxnm])iu$/$1ui/
+    # iang
+    - derive/([qjlxn])iang$/$1aing/
+    - derive/([qjlxn])iang$/$1inag/
+    # ua
+    - derive/([g|k|h|zh|sh])ua$/$1au/
+    # uai
+    - derive/([g|h|k|zh|ch|sh])uai$/$1aui/
+    # - derive/([g|h|k|zh|ch|sh])uai$/$1uia/ # 和「会啊、追啊」等常用词有冲突
+    # uan
+    - derive/([qrtysdghjklzxcn])uan$/$1aun/
+    # - derive/([qrtysdghjklzxcn])uan$/$1una/ # 和「去哪、露娜」等常用词有冲突
+    # ue
+    - derive/([nlyjqx])ue$/$1eu/
+    # uang
+    - derive/([g|h|k|zh|ch|sh])uang$/$1aung/
+    - derive/([g|h|k|zh|ch|sh])uang$/$1uagn/
+    - derive/([g|h|k|zh|ch|sh])uang$/$1unag/
+    - derive/([g|h|k|zh|ch|sh])uang$/$1augn/
+    # iong
+    - derive/([jqx])iong$/$1inog/
+    - derive/([jqx])iong$/$1oing/
+    - derive/([jqx])iong$/$1iogn/
+    - derive/([jqx])iong$/$1oign/
+    # 其他
+    - derive/([rtsdghkzc])o(u|ng)$/$1o/ # do → dou|dong
+    - derive/(.+)ong$/$1on/ # lon → long
+    - derive/([tl])eng$/$1en/ # ten → teng
+    - derive/([qwrtypsdfghjklzxcbnm])([aeio])ng$/$1ng/ # lng → lang、leng、ling、long
