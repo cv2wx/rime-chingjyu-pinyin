@@ -16,7 +16,7 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: traditionalizer
+  - name: traditionalization
     reset: 0
     states: [ 简体, 繁体 ]
   - name: ascii_punct
@@ -64,7 +64,8 @@ translator:
 
 traditionalizer:
   opencc_config: s2t.json
-  option_name: traditionalizer
+  option_name: traditionalization
+  tips: none
 
 custom_phrase:
   dictionary: ""
