@@ -2,13 +2,22 @@
 # encoding: utf-8
 #
 #
-# https://github.com/chingjyu/rime-chingjyu-pinyin
+# https://github.com/iDvel/rime-ice
 # ------- 大字表 -------
+# （已经不是最初的 41448 个字了，一直没有改名）
 #
+# 数据来源：
+# 字来自 Unihan https://www.unicode.org/Public/ > 16.0.0 > Unihan.zip > Unihan_Readings.txt > kMandarin
+# 音来自汉典 https://github.com/mozillazg/pinyin-data/ > zdic.txt
+# 因为 Unihan 的音存在错误及缺失的情况，汉典存在过多生僻罕见的字，结合了一下。
 #
+# 使用建议： 多个词库文件有重复时，靠前的词库文件中的权重生效。
+#          将 8105  作为第一字表，放到靠前位置；
+#          将 41448 作为第二字表，放到靠后位置。
+#          这样小字表里存在的字按权重靠前排列，大字表殿后，生僻字自动就排在末尾。
 ---
-name: single_large
-version: "2024-05-16"
+name: 41448
+version: "2024-07-28"
 sort: by_weight
 ...
 # 注释掉了一些
@@ -8667,6 +8676,7 @@ sort: by_weight
 𩙣	feng
 𩪌	feng
 𪐃	feng
+覅	fiao
 㤇	fo
 仏	fo
 仸	fo
@@ -23495,6 +23505,7 @@ sort: by_weight
 疑	ni
 眤	ni
 睨	ni
+祢	ni
 秜	ni
 籾	ni
 縌	ni

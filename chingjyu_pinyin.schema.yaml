@@ -16,9 +16,9 @@ switches:
     states: [ 中文, 西文 ]
   - name: full_shape
     states: [ 半角, 全角 ]
-  - name: traditionalization
+  - options: [ noop, zh_hant, zh_hk, zh_tw ]
     reset: 0
-    states: [ 简体, 繁体 ]
+    states: [ 简体, 繁体, 香港繁体, 台湾繁体 ]
   - name: ascii_punct
     states: [ 。，, ．， ]
 
@@ -43,7 +43,9 @@ engine:
     - table_translator@custom_phrase
     - script_translator
   filters:
-    - simplifier@traditionalizer
+    - simplifier@zh_hant
+    - simplifier@zh_hk
+    - simplifier@zh_tw
     - uniquifier
 
 speller:
@@ -62,10 +64,17 @@ translator:
     - xform/([nl])ue/$1üe/
     - xform/([jqxy])v/$1u/
 
-traditionalizer:
+zh_hant:
+  option_name: zh_hant
   opencc_config: s2t.json
-  option_name: traditionalization
-  tips: none
+
+zh_hk:
+  option_name: zh_hk
+  opencc_config: s2hk.json
+
+zh_tw:
+  option_name: zh_tw
+  opencc_config: s2twp.json
 
 custom_phrase:
   dictionary: ""
@@ -87,5 +96,4 @@ recognizer:
     punct: '^/([0-9]0?|[A-Za-z]+)$'
 
 __patch:
-  # 用家自選配置
   - chingjyu_pinyin.custom:/patch?
