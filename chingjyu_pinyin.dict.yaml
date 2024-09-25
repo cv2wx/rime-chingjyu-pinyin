@@ -9,6 +9,7 @@ import_tables:
   - ext_dicts/single_large  # 大字表（按需启用）
   - ext_dicts/base     # 基础词库
   - ext_dicts/ext1      # 扩展词库
+  - ext_dicts/ext2
 
 ...
 
