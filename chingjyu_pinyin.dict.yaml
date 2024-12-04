@@ -3,14 +3,36 @@
 
 ---
 name: chingjyu_pinyin
-version: "2023-11-13"
+version: "1.1"
 import_tables:
-  - ext_dicts/single     # 字表
-  - ext_dicts/single_large  # 大字表（按需启用）
-  - ext_dicts/base     # 基础词库
-  - ext_dicts/ext1      # 扩展词库
-  - ext_dicts/ext2
-
+  - dicts/single        # 字表
+  - dicts/single_large  # 大字表
+  - dicts/base          # 基础词库
+  - dicts/ext           # 扩展词库
+  - dicts/ext2          # 腾讯词向量
+  # 按需启用：
+  - cell_dicts/medication
+  - cell_dicts/industry_product
+  - cell_dicts/exthot
+  - cell_dicts/chess
+  - cell_dicts/chess2
+  - cell_dicts/animal
+  - cell_dicts/game
+  - cell_dicts/idiom
+  - cell_dicts/sport
+  - cell_dicts/media
+  - cell_dicts/shulihua
+  - cell_dicts/food
+  - cell_dicts/inputmethod
+  - cell_dicts/history
+  - cell_dicts/place
+  - cell_dicts/geography
+  - cell_dicts/name2
+  - cell_dicts/literature
+  - cell_dicts/music
+  - cell_dicts/computer
+  - cell_dicts/composite
+  - cell_dicts/name
 ...
 
 # 按需启用：
