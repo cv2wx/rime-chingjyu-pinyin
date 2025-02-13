@@ -71,3 +71,11 @@ patch:
   # 分尖团后 v => ü 的改写条件也要扩展：
   #'translator/preedit_format':
   #  - "xform/([nljqxyzcs])v/$1ü/"
+
+  grammar:
+    language: wanxiang-lts-zh-hans
+    collocation_max_length: 5
+    collocation_min_length: 2
+  translator/contextual_suggestions: true
+  translator/max_homophones: 7
+  translator/max_homographs: 7
