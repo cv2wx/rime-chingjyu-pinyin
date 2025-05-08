@@ -15,6 +15,11 @@
 又双叒叕	yyyy
 不run许	buyunxu
 不run许	burunxu
+Hi	hi	2
+hi	hi	1
+Hello	hello	2
+hello	hello	1
+嘻嘻	hihi	1
 
 go	go
 Golang	golang
