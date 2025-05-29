@@ -3,13 +3,14 @@
 
 ---
 name: chingjyu_pinyin
-version: "1.1"
+version: "2.2"
 import_tables:
   - dicts/single        # 字表
   - dicts/single_large  # 大字表
   - dicts/base          # 基础词库
   - dicts/ext1          # 扩展词库
   - dicts/ext2          # 腾讯词向量
+  - dicts/corrections
   # 按需启用：
   - cell_dicts/animal
   #- cell_dicts/chess
